@@ -30,8 +30,8 @@
     | Bật Ngrok  | sh <(curl -L https://bit.ly/n8n_with_ngrok_pi) |
     |  |  |
 2. Link mua TVBox:
-- Có armbian: [https://s.shopee.vn/8zqLjoKSQh](https://s.shopee.vn/8zqLjoKSQh)
-- Có armbina: [https://s.shopee.vn/5Kx3OENPc5](https://s.shopee.vn/5Kx3OENPc5)
+- Có sẵn armbian: [https://s.shopee.vn/8zqLjoKSQh](https://s.shopee.vn/8zqLjoKSQh)
+- Có sẵn armbian: [https://s.shopee.vn/5Kx3OENPc5](https://s.shopee.vn/5Kx3OENPc5)
 - Chưa cài - Tx3 Mini 2G: [https://s.shopee.vn/5VGSGiLjc9](https://s.shopee.vn/5VGSGiLjc9)
 - Chưa cài- H96Max 4G: [https://s.shopee.vn/3VVPBo00AK](https://s.shopee.vn/3VVPBo00AK)
 - Chỉ là link tham khảo. Check kỹ danh sách tương thích bên trên.
