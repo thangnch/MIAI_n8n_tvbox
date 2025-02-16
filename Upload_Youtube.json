@@ -1,0 +1,157 @@
+{
+  "name": "Test WF",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -540,
+        200
+      ],
+      "id": "218cc02e-7765-4342-9f08-5b165cfb6fa6",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.googleapis.com/upload/youtube/v3/videos?part=snippet,status&uploadType=resumable",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "youTubeOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-Upload-Content-Type",
+              "value": "video/webm"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "RAW/JSON",
+        "body": "={\n  \"snippet\": {\n    \"title\": \"Video dai duong dep\",\n    \"description\": \"Mo ta cua video\",\n    \"tags\": \"dai duong,ocean\",\n    \"categoryId\": \"24\",\n    \"defaultLanguage\": \"vi\",\n    \"defaultAudioLanguage\": \"vi\"\n  },\n  \"status\": {\n    \"privacyStatus\": \"public\",\n    \"license\": \"youtube\",\n    \"embeddable\": true,\n    \"publicStatsViewable\": true,\n    \"madeForKids\": false\n  }\n}\n",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -280,
+        200
+      ],
+      "id": "880b7fb4-3304-4e6c-b5d6-46e7093a094e",
+      "name": "Get upload URL from YT",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "url": "https://file-examples.com/storage/febb80f7d567b1cb49bdca5/2017/04/file_example_MP4_1920_18MG.mp4",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          },
+          "response": {
+            "response": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4f421ec8-62fa-4636-8583-df48accf958d",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Get upload URL from YT').item.json.headers.location }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "youTubeOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "video/webm"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        280,
+        200
+      ],
+      "id": "c0fb87bd-109d-4d0d-a8c5-1779a2ffbab8",
+      "name": "Post video to YT",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get upload URL from YT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get upload URL from YT": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Post video to YT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7098913b-8de3-4f8b-abcb-768cc6e81878",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "66f9cec1b36ca6b540ed571cc2bed53a4ed5969b7316077dd56c27491c282b07"
+  },
+  "id": "yfmLoG50wwAtjIGH",
+  "tags": []
+}
